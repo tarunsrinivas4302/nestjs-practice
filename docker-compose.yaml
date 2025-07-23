@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:latest
+    ports:
+      - "5434:5432"
+    environment:
+       POSTGRES_USER: tarunsrinivas
+       POSTGRES_PASSWORD: taRun4302
+       POSTGRES_DB: bookmark_db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - postgres-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "1543:80"
+    env_file:
+      - .env
+    depends_on:
+      - database
+    networks:
+      - postgres-network
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin/
+
+networks:
+  postgres-network:
