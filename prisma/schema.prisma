@@ -21,6 +21,9 @@ model User {
   password String 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  bookmarks BookMark[] 
+
+  @@map("users")
 }
 
 model BookMark{
@@ -30,4 +33,9 @@ model BookMark{
   link String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userId Int 
+  user User @relation(fields: [userId] , references: [id]) // to define relation for one to many 
+
+  @@map("bookmarks")
 }
